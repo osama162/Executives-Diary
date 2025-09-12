@@ -1,0 +1,275 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap");
+
+:root {
+  --font-cinzel: var(--font-cinzel);
+  --font-muli: var(--font-muli);
+}
+
+nav,
+li,
+.font-times {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+a,
+.font-muli,
+p,
+h4,
+div {
+  font-family: var(--font-muli), sans-serif;
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel), cursive;
+}
+
+.heading-ed-book,
+.font-times {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@layer utilities {
+  @keyframes slide-down-fade {
+    0% {
+      transform: translateY(-12px);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .animate-slide-down-fade {
+    animation: slide-down-fade 0.4s ease-out both;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* light gray track */
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #1e1c4d; /* your blue/navy color */
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #3742a5; /* darker shade on hover */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #1e1c4d #f1f1f1;
+}
+
+/* book flip */
+.book-cover:hover .book-flip {
+  opacity: 1;
+}
+
+.book-cover-hover:hover .book-flip {
+  opacity: 1;
+}
+
+.book-cover-large-hover:hover .book-flip {
+  opacity: 1;
+}
+
+.book-cover {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+  margin-top: 38%;
+}
+
+.book-cover-hover {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+  width: 90%;
+}
+
+.book-cover-large-hover {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+  width: 85%;
+}
+
+.book-flip {
+  -webkit-transform-origin: 35% 50%;
+  transform-origin: 35% 50%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.book-flip {
+  position: relative;
+  transition: 0.5s;
+}
+
+.book-flip::after {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.book-flip::after {
+  width: 70px;
+}
+
+.book-flip::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 98.5%;
+  bottom: 3px;
+  width: 60px;
+  background: repeating-linear-gradient(
+    to right,
+    #f5f5f5,
+    #f5f5f5 5px,
+    #aaa 5px,
+    #aaa 6px
+  );
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transform: rotateY(90deg);
+  transform: rotateY(90deg);
+}
+
+.book-cover-hover:hover .book-flip {
+  -webkit-transform: rotateY(-35deg);
+  transform: rotateY(-35deg);
+}
+
+.book-cover-large-hover:hover .book-flip {
+  -webkit-transform: rotateY(-35deg);
+  transform: rotateY(-35deg);
+}
+
+.book-cover-overlay-img {
+  max-width: 120px;
+  max-height: 140px;
+  height: 100vw;
+  margin: -79px 0 0 -60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  resize: both;
+}
+
+.book-cover-overlay-img-large {
+  max-width: 266px;
+  max-height: 353px;
+  height: 100vw;
+  margin: -185px 0 0 -139px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  resize: both;
+  width: 266px;
+}
+
+.book-cover-overlay-text {
+  width: 90%;
+  margin: -59px 0 0 -98px;
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  resize: both;
+}
+
+.book-cover-overlay-text-large {
+  max-width: 402px;
+  margin: -90px 0 0 -197px;
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  resize: both;
+  width: 388px;
+}
+
+.profile-border {
+  border: 5px solid #efe4abfa;
+}
+
+.industry-name {
+  color: white;
+  font-size: 17px;
+}
+
+.book-text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+a.sprial_img_main_book::before {
+  content: "";
+  font-weight: 700;
+  position: absolute;
+  top: 50%;
+  height: 107%;
+  width: 39px;
+  left: -17px;
+  z-index: 99999;
+  transform: translateY(-50%) scale(0.855);
+  text-decoration: none;
+  background-image: url(/images/Vector-Smart-Object.png);
+}
+
+.indus-job {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 10px auto 5px;
+  display: block;
+  width: 100%;
+  color: #424242 !important;
+}
+.demoPage {
+  background-color: white;
+  color: black;
+}
+
+/* book shadow crease */
+.book-shadow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5px; /* how wide the shadow band is */
+  height: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: #1e1c4d;
+  z-index: 5;
+}
+/* Let inputs/textareas inside the book receive events & be selectable */
+.html-flip-book .page .page-content,
+.html-flip-book .page .page-content * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -ms-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+/* specifically help textareas */
+.html-flip-book .page .page-content textarea,
+.html-flip-book .page .page-content input,
+.html-flip-book .page .page-content button {
+  pointer-events: auto !important;
+  touch-action: auto !important; /* allow native touch editing/scrolling */
+}
