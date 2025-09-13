@@ -3,30 +3,85 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/ExecutivesDiaries", label: "EXECUTIVES DIARIES" },
-  // { href: "/", label: "REVIEWS" },
+  { href: "/", label: "REVIEWS" },
   { href: "/About", label: "About" },
+  { href: "/", label: "Blog" },
+
+  // { href: "/", label: "REVIEWS" },
   // { href: "/", label: "BLOG" },
 ];
 
-
+const INDUSTRIES = [
+  { name: "Consultant", subcategories: [] },
+  {
+    name: "Technology",
+    subcategories: ["Computer Technologies"],
+  },
+  { name: "Marketing", subcategories: [] },
+  { name: "Leadership", subcategories: [] },
+  { name: "Business", subcategories: [] },
+  { name: "Finance", subcategories: [] },
+  { name: "Education", subcategories: [] },
+  {
+    name: "Media and Advertising",
+    subcategories: ["Entertainment"],
+  },
+  {
+    name: "Health Care",
+    subcategories: [],
+  },
+  { name: "Management Consulting", subcategories: [] },
+  { name: "Energy", subcategories: [] },
+  { name: "Law", subcategories: [] },
+  { name: "Human Resource", subcategories: [] },
+  { name: "Fashion", subcategories: [] },
+  { name: "Real Estate", subcategories: [] },
+  { name: "Public Safety", subcategories: [] },
+  { name: "Cosmetics", subcategories: [] },
+  { name: "Business Advisor", subcategories: [] },
+  { name: "Architecture & Planning", subcategories: [] },
+  { name: "Industrial", subcategories: [] },
+  { name: "Environment", subcategories: [] },
+  { name: "Writing and Editing", subcategories: [] },
+  { name: "Food", subcategories: [] },
+  { name: "Hospitality", subcategories: [] },
+  { name: "Journalism", subcategories: [] },
+  { name: "Transportation & Logistic", subcategories: [] },
+  { name: "Community Building", subcategories: [] },
+  { name: "Project Management", subcategories: [] },
+];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [industriesOpen, setIndustriesOpen] = useState(false);
+  const [openSubcategories, setOpenSubcategories] = useState({});
   const lastY = useRef(0);
+
+  // Toggle functions
+  const toggleIndustries = () => {
+    setIndustriesOpen(!industriesOpen);
+  };
+
+  const toggleSubcategory = (industryName) => {
+    setOpenSubcategories((prev) => ({
+      ...prev,
+      [industryName]: !prev[industryName],
+    }));
+  };
 
   // Lock body scroll when drawer open
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
+    if (open || leftOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [open, leftOpen]);
 
   // Add sticky + transition on scroll
   useEffect(() => {
@@ -41,189 +96,428 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header
-      className={[
-        "sticky top-0 z-[1111] w-full transition-all duration-300",
-        scrolled ? "bg-[#1e1c4d]/95 shadow-lg animate-slide-down-fade" : "bg-[#1e1c4d]",
-      ].join(" ")}
-    >
-      <div className="mx-auto px-6 sm:px-6 lg:px-8 ">
-        <div className="flex h-17 items-center justify-between">
-          {/* Left: Hamburger + Logo */}
-          <div className="flex items-center gap-3">
-            <button
-              aria-label="Open menu"
-              onClick={() => setOpen(true)}
-              className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white lg:hidden"
-            >
-              <span className="sr-only">Open main menu</span>
-              <div className="space-y-1.5">
-                <span className="block h-0.5 w-6 bg-white" />
-                <span className="block h-0.5 w-6 bg-white" />
-                <span className="block h-0.5 w-6 bg-white" />
-              </div>
-            </button>
-
-            {/* Logo */}
-            <Link href="/" className="select-none text-white">
-              <Image
-                src={'/images/footer-logo.png'}
-                width={500}
-                height={500}
-                className="w-[60%]"
-                alt="logo"
-              />
-            </Link>
-          </div>
-
-          {/* Center: Nav (desktop) */}
-          <nav className="hidden lg:block">
-            <ul className="flex items-center gap-14">
-              {NAV_LINKS.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="text-sm uppercase font-semibold leading-[70px] text-white transition-colors hover:text-[#28d7a2]"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* Right: Search + Login (desktop) */}
-          <div className="hidden items-center gap-3 lg:flex">
-            <div className="relative w-64">
-              <input
-                type="text"
-                placeholder="Search"
-                className="h-9 w-full rounded-md border border-gray-300 bg-white pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
-              />
-              <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-              </span>
-            </div>
-
-            <Link
-              href="/Login"
-              className="rounded-md bg-[#007bfd] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
-            >
-              Login
-            </Link>
-          </div>
-
-
-        </div>
-      </div>
-
-      {/* Mobile Drawer + Overlay */}
-      <div
+    <>
+      <style jsx>{`
+        #leftModal .active {
+          background: #ffffff42;
+        }
+        #leftModal .nav-link {
+          display: block;
+        }
+        .sub-menu ul li a {
+          padding-left: 12px;
+          padding-left: 37px;
+        }
+        .nav-link {
+          color: #fff !important;
+          font: 600 13px / 39px Muli, sans-serif !important;
+          display: inline-block;
+        }
+        .nav-link {
+          display: block;
+          padding: 0.5rem 1rem;
+        }
+      `}</style>
+      <header
         className={[
-          "fixed inset-0 z-[1112] lg:hidden transition-opacity",
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+          "sticky top-0 z-[1111] w-full transition-all duration-300",
+          scrolled
+            ? "bg-[#1e1c4d]/95 shadow-lg animate-slide-down-fade"
+            : "bg-[#1e1c4d]",
         ].join(" ")}
       >
-        {/* Overlay */}
-        <div
-          onClick={() => setOpen(false)}
-          className="absolute inset-0 bg-black/50"
-          aria-hidden="true"
-        />
+        <div className="mx-auto py-2 px-4 sm:px-4 lg:px-4 ">
+          <div className="flex h-17 items-center justify-between">
+            {/* Left: Left Hamburger + Logo + Right Hamburger */}
+            <div className="flex items-center gap-3">
+              {/* Left Hamburger - Industries Menu */}
+              <button
+                aria-label="Open industries menu"
+                onClick={() => setLeftOpen(true)}
+                className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                <span className="sr-only">Open industries menu</span>
+                <div className="space-y-1.5">
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                </div>
+              </button>
 
-        {/* Drawer */}
-        <aside
-          className={[
-            "absolute left-0 top-0 h-full w-80 max-w-[85%] translate-x-0 bg-[#1e1c4d] text-white shadow-2xl transition-transform duration-300",
-            open ? "translate-x-0" : "-translate-x-full",
-          ].join(" ")}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="flex items-center justify-between px-4 py-4">
-            <Link href="/" onClick={() => setOpen(false)} className="text-white">
-              <div className="leading-none">
-                <div className="text-xl font-extrabold tracking-wide">EXECUTIVES</div>
-                <div className="-mt-1 text-sm font-extrabold tracking-widest">DIARY</div>
-              </div>
-            </Link>
-            <button
-              onClick={() => setOpen(false)}
-              aria-label="Close menu"
-              className="rounded-md p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+              {/* Logo */}
+              <Link href="/" className="select-none text-white">
+                <Image
+                  src={"/images/footer-logo.png"}
+                  width={160}
+                  height={40}
+                  // className="w-[60%]"
+                  alt="logo"
+                />
+              </Link>
 
-          <nav className="px-4">
-            <ul className="space-y-6">
-              {NAV_LINKS.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block text-base font-semibold uppercase tracking-wide text-white hover:text-[#28d7a2]"
+              {/* Right Hamburger - Mobile Menu */}
+              <button
+                aria-label="Open main menu"
+                onClick={() => setOpen(true)}
+                className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white lg:hidden"
+              >
+                <span className="sr-only">Open main menu</span>
+                <div className="space-y-1.5">
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                </div>
+              </button>
+            </div>
+
+            {/* Center: Nav (desktop) */}
+            <nav className="hidden lg:block">
+              <ul className="flex items-center gap-[45px]">
+                {NAV_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      className="text-sm uppercase font-semibold leading-[70px] text-white transition-colors hover:text-[#28d7a2]"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Right: Search + Login (desktop) */}
+            <div className="hidden items-center gap-3 lg:flex">
+              <div className="relative w-[165px] h-[40px]">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="h-[40px] w-full bg-[#eaeaef] pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 placeholder:text-base shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
+                />
+                <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </span>
+              </div>
 
-          {/* Search + Login in drawer */}
-          <div className="mt-8 px-3">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="h-10 w-full rounded-md border border-gray-300 bg-white pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
-              />
-              <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+              <Link
+                href="/Login"
+                className="rounded-md bg-[#007bfd] px-[12px] py-[8px] text-base font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Drawer + Overlay */}
+        <div
+          className={[
+            "fixed inset-0 z-[1112] lg:hidden transition-opacity",
+            open
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0",
+          ].join(" ")}
+        >
+          {/* Overlay */}
+          <div
+            onClick={() => setOpen(false)}
+            className="absolute inset-0 bg-black/50"
+            aria-hidden="true"
+          />
+
+          {/* Drawer */}
+          <aside
+            className={[
+              "absolute left-0 top-0 h-full w-80 max-w-[85%] translate-x-0 bg-[#1e1c4d] text-white shadow-2xl transition-transform duration-300",
+              open ? "translate-x-0" : "-translate-x-full",
+            ].join(" ")}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="flex items-center justify-between px-4 py-4">
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className="text-white"
+              >
+                <div className="leading-none">
+                  <div className="text-xl font-extrabold tracking-wide">
+                    EXECUTIVES
+                  </div>
+                  <div className="-mt-1 text-sm font-extrabold tracking-widest">
+                    DIARY
+                  </div>
+                </div>
+              </Link>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+                className="rounded-md p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  className="h-5 w-5 text-gray-500"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  className="h-6 w-6"
                 >
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
-              </span>
+              </button>
             </div>
 
-            <Link
-              href="/Login"
-              onClick={() => setOpen(false)}
-              className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-[#1677ff] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
-            >
-              Login
-            </Link>
-          </div>
+            <nav className="px-4">
+              <ul className="space-y-6">
+                {NAV_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="block text-base font-semibold uppercase tracking-wide text-white hover:text-[#28d7a2]"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-        </aside>
-      </div>
-    </header>
-  )
-}
+            {/* Search + Login in drawer */}
+            <div className="mt-8 px-3">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="h-10 w-full rounded-md border border-gray-300 bg-white pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
+                />
+                <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </span>
+              </div>
 
-export default Navbar
+              <Link
+                href="/Login"
+                onClick={() => setOpen(false)}
+                className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-[#1677ff] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                Login
+              </Link>
+            </div>
+          </aside>
+        </div>
+
+        {/* Left Industries Modal + Overlay */}
+        <div
+          className={[
+            "fixed inset-0 z-[1113] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]",
+            leftOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0",
+          ].join(" ")}
+        >
+          {/* Overlay */}
+          <div
+            onClick={() => setLeftOpen(false)}
+            className="absolute inset-0 bg-black/50"
+            aria-hidden="true"
+          />
+
+          {/* Left Industries Drawer */}
+          <aside
+            id="leftModal"
+            className={[
+              "absolute left-0 top-0 h-full w-80 max-w-[85%] translate-x-0 bg-[#1e1c4d] text-white shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col",
+              leftOpen
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-full opacity-0",
+            ].join(" ")}
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* Scrollable Content Area */}
+            <div className="flex-1 overflow-y-auto">
+              {/* Home Header with Cross Icon */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/20">
+                <h2 className="text-lg font-bold text-white">Home</h2>
+                <button
+                  onClick={() => setLeftOpen(false)}
+                  aria-label="Close industries menu"
+                  className="rounded-md p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="h-6 w-6"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* All Industries Header */}
+              <div
+                className="px-4 py-3 border-b border-white/20 cursor-pointer hover:bg-white/10 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                onClick={toggleIndustries}
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-white">
+                    All Industries
+                  </h3>
+                  <svg
+                    className={`w-5 h-5 text-white transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                      industriesOpen ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Industries List */}
+              <nav
+                className={`px-0 py-2 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                  industriesOpen
+                    ? "max-h-screen opacity-100"
+                    : "max-h-0 opacity-0 overflow-hidden"
+                }`}
+              >
+                <ul className="space-y-0">
+                  {INDUSTRIES.map((industry, index) => (
+                    <li key={index} className="border-b border-white/20">
+                      {/* Main Category Row */}
+                      <div
+                        className={`group hover:bg-white/20 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                          industry.subcategories.length > 0 &&
+                          openSubcategories[industry.name]
+                            ? "bg-white/20"
+                            : ""
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <Link
+                            href={`/industry/${industry.name
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
+                            onClick={() => setLeftOpen(false)}
+                            className="nav-link flex-1 block px-4 py-2 text-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            style={{
+                              font: "600 13px / 39px Muli, sans-serif",
+                              paddingLeft: "37px",
+                            }}
+                          >
+                            {industry.name}
+                          </Link>
+                          {industry.subcategories.length > 0 && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleSubcategory(industry.name);
+                              }}
+                              className="px-2 py-2 text-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            >
+                              <svg
+                                className={`w-4 h-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                                  openSubcategories[industry.name]
+                                    ? "rotate-180"
+                                    : ""
+                                }`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Subcategories */}
+                      {industry.subcategories.length > 0 && (
+                        <div
+                          className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                            openSubcategories[industry.name]
+                              ? "max-h-screen opacity-100"
+                              : "max-h-0 opacity-0 overflow-hidden"
+                          }`}
+                        >
+                          <ul className="space-y-0">
+                            {industry.subcategories.map(
+                              (subcategory, subIndex) => (
+                                <li
+                                  key={subIndex}
+                                  className="border-b border-white/10"
+                                >
+                                  <Link
+                                    href={`/industry/${subcategory
+                                      .toLowerCase()
+                                      .replace(/\s+/g, "-")}`}
+                                    onClick={() => setLeftOpen(false)}
+                                    className="nav-link block px-4 py-2 text-white hover:bg-white/20 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                                    style={{
+                                      font: "600 13px / 39px Muli, sans-serif",
+                                      paddingLeft: "60px",
+                                    }}
+                                  >
+                                    {subcategory}
+                                  </Link>
+                                </li>
+                              )
+                            )}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </aside>
+        </div>
+      </header>
+    </>
+  );
+};
+
+export default Navbar;
