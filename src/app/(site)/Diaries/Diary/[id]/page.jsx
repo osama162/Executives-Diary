@@ -1,8 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import DiaryBook from '../../../../components/DiaryBook';
-import { useParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import DiaryBook from "../../../../components/DiaryBook";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import NavigationButtons from "../../../../components/NavigationButtons";
 
 export default function DiaryDemoPage() {
   const params = useParams();
@@ -14,7 +16,8 @@ export default function DiaryDemoPage() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_DOMAIN || 'http://127.0.0.1:8000';
+  const API_BASE =
+    process.env.NEXT_PUBLIC_API_DOMAIN || "http://127.0.0.1:8000";
 
   useEffect(() => {
     async function fetchAll() {
@@ -55,7 +58,7 @@ export default function DiaryDemoPage() {
           setRecommendations(recJson.data);
         }
       } catch (err) {
-        console.error('Error loading diary data:', err);
+        console.error("Error loading diary data:", err);
       } finally {
         setLoading(false);
       }
@@ -63,21 +66,42 @@ export default function DiaryDemoPage() {
 
     fetchAll();
   }, [API_BASE, id]);
+  // Navigation buttons component
 
   if (loading) {
-    return <p className="text-center mt-10">Loading Diary...</p>;
+    return (
+      <div className="flex flex-col items-center mt-10">
+        {/* Skeleton for DiaryBook cover */}
+        <div className="w-[320px] h-[420px] bg-gray-200 animate-pulse rounded-lg mb-6" />
+        {/* Skeleton for title */}
+        <div className="w-2/3 h-8 bg-gray-200 animate-pulse rounded mb-4" />
+        {/* Skeleton for author */}
+        <div className="w-1/3 h-6 bg-gray-200 animate-pulse rounded mb-8" />
+        {/* Skeleton for chapters */}
+        <div className="w-full max-w-2xl space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-5 bg-gray-200 animate-pulse rounded" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (!executive) {
-    return <p className="text-center mt-10 text-red-600">Executive not found.</p>;
+    return (
+      <p className="text-center mt-10 text-red-600">Executive not found.</p>
+    );
   }
 
   return (
-    <DiaryBook
-      executive={executive}
-      chapters={chapters}
-      socialPosts={socialPosts}
-      recommendations={recommendations}
-    />
+    <>
+      <NavigationButtons />
+      <DiaryBook
+        executive={executive}
+        chapters={chapters}
+        socialPosts={socialPosts}
+        recommendations={recommendations}
+      />
+    </>
   );
 }
