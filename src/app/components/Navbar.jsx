@@ -128,7 +128,7 @@ const Navbar = () => {
       >
         <div className="mx-auto py-2 px-4 sm:px-4 lg:px-4 ">
           <div className="flex h-17 items-center justify-between">
-            {/* Left: Left Hamburger + Logo + Right Hamburger */}
+            {/* Left: Left Hamburger + Logo */}
             <div className="flex items-center gap-3">
               {/* Left Hamburger - Industries Menu */}
               <button
@@ -154,20 +154,6 @@ const Navbar = () => {
                   alt="logo"
                 />
               </Link>
-
-              {/* Right Hamburger - Mobile Menu */}
-              <button
-                aria-label="Open main menu"
-                onClick={() => setOpen(true)}
-                className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white lg:hidden"
-              >
-                <span className="sr-only">Open main menu</span>
-                <div className="space-y-1.5">
-                  <span className="block h-0.5 w-6 bg-white" />
-                  <span className="block h-0.5 w-6 bg-white" />
-                  <span className="block h-0.5 w-6 bg-white" />
-                </div>
-              </button>
             </div>
 
             {/* Center: Nav (desktop) */}
@@ -186,149 +172,129 @@ const Navbar = () => {
               </ul>
             </nav>
 
-            {/* Right: Search + Login (desktop) */}
-            <div className="hidden items-center gap-3 lg:flex">
-              <div className="relative w-[165px] h-[40px]">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="h-[40px] w-full bg-[#eaeaef] pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 placeholder:text-base shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
-                />
-                <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 text-gray-500"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                </span>
+            {/* Right: Search + Login (desktop) + Mobile Burger */}
+            <div className="flex items-center gap-3">
+              {/* Desktop Search + Login */}
+              <div className="hidden items-center gap-3 lg:flex">
+                <div className="relative w-[165px] h-[40px]">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="h-[40px] w-full bg-[#eaeaef] pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 placeholder:text-base shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
+                  />
+                  <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-gray-500"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </span>
+                </div>
+
+                <Link
+                  href="/Login"
+                  className="rounded-md bg-[#007bfd] px-[12px] py-[8px] text-base font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
+                >
+                  Login
+                </Link>
               </div>
 
-              <Link
-                href="/Login"
-                className="rounded-md bg-[#007bfd] px-[12px] py-[8px] text-base font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
+              {/* Right Hamburger - Mobile Menu */}
+              <button
+                aria-label="Open main menu"
+                onClick={() => setOpen(!open)}
+                className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white lg:hidden"
               >
-                Login
-              </Link>
+                <span className="sr-only">Open main menu</span>
+                <div className="space-y-1.5">
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                  <span className="block h-0.5 w-6 bg-white" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Drawer + Overlay */}
+        {/* Mobile Menu - Full Width Below Navbar */}
         <div
           className={[
-            "fixed inset-0 z-[1112] lg:hidden transition-opacity",
+            "fixed top-[73px] left-0 right-0 z-[1112] lg:hidden transition-all duration-300 ease-in-out",
             open
-              ? "pointer-events-auto opacity-100"
-              : "pointer-events-none opacity-0",
+              ? "pointer-events-auto opacity-100 translate-y-0"
+              : "pointer-events-none opacity-0 -translate-y-4",
           ].join(" ")}
         >
-          {/* Overlay */}
+          {/* Mobile Menu Content */}
           <div
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 bg-black/50"
-            aria-hidden="true"
-          />
-
-          {/* Drawer */}
-          <aside
-            className={[
-              "absolute left-0 top-0 h-full w-80 max-w-[85%] translate-x-0 bg-[#1e1c4d] text-white shadow-2xl transition-transform duration-300",
-              open ? "translate-x-0" : "-translate-x-full",
-            ].join(" ")}
+            className="w-full bg-[#1e1c4d] text-white shadow-2xl"
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex items-center justify-between px-4 py-4">
-              <Link
-                href="/"
-                onClick={() => setOpen(false)}
-                className="text-white"
-              >
-                <div className="leading-none">
-                  <div className="text-xl font-extrabold tracking-wide">
-                    EXECUTIVES
-                  </div>
-                  <div className="-mt-1 text-sm font-extrabold tracking-widest">
-                    DIARY
-                  </div>
-                </div>
-              </Link>
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Close menu"
-                className="rounded-md p-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="h-6 w-6"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+            {/* Mobile Menu Content */}
+            <div className="px-4 py-6">
+              {/* Navigation Links - Left Side */}
+              <nav className="mb-6">
+                <ul className="space-y-4">
+                  {NAV_LINKS.map((item) => (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="block text-base font-semibold uppercase tracking-wide text-white hover:text-[#28d7a2] transition-colors duration-200 py-2"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-            <nav className="px-4">
-              <ul className="space-y-6">
-                {NAV_LINKS.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="block text-base font-semibold uppercase tracking-wide text-white hover:text-[#28d7a2]"
+              {/* Search and Login - Right Side Layout */}
+              <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+                {/* Search Input - Same as Desktop */}
+                <div className="relative flex-1 sm:max-w-[165px]">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="h-[40px] w-full bg-[#eaeaef] pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 placeholder:text-base shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2] transition-all duration-200"
+                  />
+                  <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5 text-gray-500"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </span>
+                </div>
 
-            {/* Search + Login in drawer */}
-            <div className="mt-8 px-3">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="h-10 w-full rounded-md border border-gray-300 bg-white pl-3 pr-9 text-sm text-slate-900 placeholder-slate-500 shadow-sm outline-none focus:ring-2 focus:ring-[#28d7a2]"
-                />
-                <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 text-gray-500"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                </span>
+                {/* Login Button - Same as Desktop */}
+                <Link
+                  href="/Login"
+                  onClick={() => setOpen(false)}
+                  className="rounded-md bg-[#007bfd] px-[12px] py-[8px] text-base font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white transition-all duration-200 text-center sm:w-auto"
+                >
+                  Login
+                </Link>
               </div>
-
-              <Link
-                href="/Login"
-                onClick={() => setOpen(false)}
-                className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-[#1677ff] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#1469dd] focus:outline-none focus:ring-2 focus:ring-white"
-              >
-                Login
-              </Link>
             </div>
-          </aside>
+          </div>
         </div>
 
         {/* Left Industries Modal + Overlay */}
