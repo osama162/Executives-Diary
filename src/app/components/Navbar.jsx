@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import { usePathname } from "next/navigation";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/ExecutivesDiaries", label: "EXECUTIVES DIARIES" },
@@ -61,7 +61,7 @@ const Navbar = () => {
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [openSubcategories, setOpenSubcategories] = useState({});
   const lastY = useRef(0);
-
+  const pathname = usePathname();
   // Toggle functions
   const toggleIndustries = () => {
     setIndustriesOpen(!industriesOpen);
@@ -94,6 +94,11 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // for diary route retun null
+  if (pathname.includes("/Diaries/Diary")) {
+    return null;
+  }
 
   return (
     <>

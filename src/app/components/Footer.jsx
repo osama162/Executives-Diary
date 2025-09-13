@@ -1,7 +1,13 @@
+"use client";
 import React from "react";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
 const Footer = () => {
+  // for diary route retun null
+  const pathname = usePathname();
+  if (pathname.includes("/Diaries/Diary")) {
+    return null;
+  }
   return (
     <footer className="bg-[#1E1C4D] text-white py-8">
       <div className="container mx-auto px-4">

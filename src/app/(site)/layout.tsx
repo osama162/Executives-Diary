@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "../globals.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const cinzel = localFont({
@@ -19,9 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <div>
-
+      <Navbar />
       {children}
-
+      <Footer />
     </div>
   );
 }
