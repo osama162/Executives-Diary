@@ -258,7 +258,7 @@ const DiaryChapterPage = () => {
   return (
     <>
       <NavigationButtons />
-      <div className="mx-14 mt-6">
+      <div className="mx-14 mt-4">
         <div className="border-[#1e1c4d] border-[19px] border-x-[30px] rounded-[10px] mx-10 my-2 relative overflow-visible">
           <div className="bg-white rounded-md overflow-visible relative">
             <div className="relative book-shadow overflow-visible">

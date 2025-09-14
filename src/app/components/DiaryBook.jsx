@@ -3,6 +3,7 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
@@ -10,16 +11,65 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
 
 /* ----------------------------- small UI ----------------------------- */
 
-function LeftTabs({ tabs, active, onChange, disabledKeys = [] }) {
+function LeftTabs({ tabs, active, onChange, disabledKeys = [], diaryId }) {
   return (
     <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 w-full">
       {tabs.map((t, i) => {
         const isDisabled = disabledKeys.includes(t.key);
+
+        // Handle direct navigation for Biography and Social
+        if (t.key === "story") {
+          return (
+            <Link
+              key={t.key}
+              href={`/Diaries/Diary/${diaryId}/Chapters`}
+              className={[
+                "text-[12px] px-[7px] py-[11px] text-center font-cinzel shadow-[1px_1px_7px_1px_#adadad] h-full items-center justify-center border inline-block",
+                i === active
+                  ? "bg-white text-black font-semibold border-transparent"
+                  : "bg-white text-black border-gray-200",
+                isDisabled
+                  ? "cursor-not-allowed"
+                  : "hover:bg-[#29d7a2] hover:text-white cursor-pointer",
+              ].join(" ")}
+            >
+              {t.label}
+            </Link>
+          );
+        }
+
+        if (t.key === "social") {
+          return (
+            <Link
+              key={t.key}
+              href={`/Diaries/Diary/${diaryId}/Social`}
+              className={[
+                "text-[12px] px-[7px] py-[11px] text-center font-cinzel shadow-[1px_1px_7px_1px_#adadad] h-full items-center justify-center border inline-block",
+                i === active
+                  ? "bg-white text-black font-semibold border-transparent"
+                  : "bg-white text-black border-gray-200",
+                isDisabled
+                  ? "cursor-not-allowed"
+                  : "hover:bg-[#29d7a2] hover:text-white cursor-pointer",
+              ].join(" ")}
+            >
+              {t.label}
+            </Link>
+          );
+        }
+
         return (
           <button
             key={t.key}
             type="button"
-            onClick={() => !isDisabled && onChange?.(i)}
+            onClick={() => {
+              console.log("LeftTabs click:", {
+                tabKey: t.key,
+                tabIndex: i,
+                isDisabled,
+              });
+              !isDisabled && onChange?.(i);
+            }}
             disabled={isDisabled}
             className={[
               "text-[12px] px-[7px] py-[11px] text-center font-cinzel shadow-[1px_1px_7px_1px_#adadad] h-full  items-center justify-center   border",
@@ -98,6 +148,7 @@ function IdentityCard({
   location,
   image,
   executive,
+  diaryId,
 }) {
   const pic = image || "/images/demoBookFlip.jpg";
   const [open, setOpen] = useState(false);
@@ -153,7 +204,12 @@ function IdentityCard({
   return (
     <div className="h-full bg-white overflow-y-auto custom-sidebar">
       <div className="px-[31px] pt-[10px]">
-        <LeftTabs tabs={tabs} active={activeTab} onChange={onTabClick} />
+        <LeftTabs
+          tabs={tabs}
+          active={activeTab}
+          onChange={onTabClick}
+          diaryId={diaryId}
+        />
       </div>
 
       <div className="px-[31px] pb-[10px] bg-white ">
@@ -682,6 +738,14 @@ export default function DiaryBook({
   const socialPath = `${basePath}/Social`;
   const chapterPath = `${basePath}/Chapters`;
 
+  console.log("Path debugging:", {
+    diaryId,
+    basePath,
+    socialPath,
+    chapterPath,
+    currentPath: pathname,
+  });
+
   const socialIndex = tabs.findIndex((t) => t.key === "social"); // 3
   const chapterIndex = tabs.findIndex((t) => t.key === "story"); // 2
 
@@ -719,6 +783,7 @@ export default function DiaryBook({
         title={executive.job_title}
         company={executive.company}
         industry={executive.industry}
+        diaryId={executive?.id}
         location={[executive.city, executive.state, executive.country]
           .filter(Boolean)
           .join(", ")}
@@ -829,15 +894,42 @@ export default function DiaryBook({
   function flipToTab(tabIndex) {
     if (!mounted) return;
 
-    console.log("flipToTab called:", { tabIndex, activeTab, mounted });
+    console.log("flipToTab called:", {
+      tabIndex,
+      activeTab,
+      mounted,
+      chapterIndex,
+      socialIndex,
+      chapterPath,
+      socialPath,
+      currentPath: pathname,
+    });
 
     // If it's Chapters or Social, navigate to route and DO NOT flip
     if (tabIndex === chapterIndex) {
-      router.push(chapterPath);
+      console.log("Navigating to Chapters:", chapterPath);
+      console.log("Current pathname:", pathname);
+      console.log("Router object:", router);
+      try {
+        router.push(chapterPath);
+        console.log("Router.push called successfully");
+      } catch (error) {
+        console.error("Router.push failed:", error);
+        window.location.href = chapterPath;
+      }
       return;
     }
     if (tabIndex === socialIndex) {
-      router.push(socialPath);
+      console.log("Navigating to Social:", socialPath);
+      console.log("Current pathname:", pathname);
+      console.log("Router object:", router);
+      try {
+        router.push(socialPath);
+        console.log("Router.push called successfully");
+      } catch (error) {
+        console.error("Router.push failed:", error);
+        window.location.href = socialPath;
+      }
       return;
     }
 
@@ -968,7 +1060,7 @@ export default function DiaryBook({
   }
 
   return (
-    <div className="mx-14 mt-6">
+    <div className="mx-14 mt-4">
       <div className="border-[#1e1c4d] border-[19px] border-x-[30px] rounded-[10px] mx-10 my-2 relative overflow-visible">
         <div className="bg-white rounded-md overflow-visible relative">
           <div className="relative book-shadow overflow-visible">
