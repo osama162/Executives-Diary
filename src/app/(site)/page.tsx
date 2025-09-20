@@ -104,14 +104,14 @@ export default function Home() {
     return (
         <div>
             <DiaryOfTheDay />
-            <div className="max-w-7xl mx-auto my-[60px]">
+            <div className="max-w-7xl mx-auto  xs:!mt-[48px] md:my-16 lg:my-[60px] px-4 sm:px-6 lg:px-8">
                 {" "}
                 {/* FEATURED EXECUTIVES */}{" "}
-                <h2 className="text-[42px] text-center tracking-wide font-normal font-cinzel">
+                <h2 className="text-2xl  xs:!mt-[75px] md:mt-0 sm:text-3xl md:text-4xl lg:text-[42px] text-center tracking-wide font-normal font-cinzel px-4">
                     <span className="text-[#2d2d2d]"> FEATURED </span>{" "}
                     <span className="bg-[#1dd1a1] text-white px-2"> EXECUTIVES </span>{" "}
                 </h2>{" "}
-                <div className="flex flex-wrap items-center justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-start justify-items-center">
                     {" "}
                     {isLoading ? (
                         <div className="text-center py-8">
@@ -138,11 +138,11 @@ export default function Home() {
                     )}{" "}
                 </div>{" "}
                 {/* TRENDING DIARIES OF THE WEEK */}{" "}
-                <h2 className="text-[42px] text-center tracking-wide font-normal font-cinzel mt-14">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] text-center tracking-wide font-normal font-cinzel mt-8 sm:mt-12 md:mt-14 px-4">
                     <span className="text-[#2d2d2d]"> Trending Diaries Of the </span>{" "}
                     <span className="bg-[#1dd1a1] text-white px-2"> Week </span>{" "}
                 </h2>{" "}
-                <div className="flex flex-wrap items-center justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-start justify-items-center">
                     {" "}
                     {isLoading ? (
                         <div className="text-center py-8">
@@ -170,11 +170,11 @@ export default function Home() {
                     )}{" "}
                 </div>{" "}
                 {/* POPULAR DIARIES */}{" "}
-                <h2 className="text-[42px] text-center tracking-wide font-normal font-cinzel mt-14">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] text-center tracking-wide font-normal font-cinzel mt-8 sm:mt-12 md:mt-14 px-4">
                     <span className="text-[#2d2d2d]"> Popular </span>{" "}
                     <span className="bg-[#1dd1a1] text-white px-2"> Diaries </span>{" "}
                 </h2>{" "}
-                <div className="flex flex-wrap items-center justify-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-start justify-items-center">
                     {" "}
                     {isLoading ? (
                         <div className="text-center py-8">

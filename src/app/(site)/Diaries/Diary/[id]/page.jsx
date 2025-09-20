@@ -70,17 +70,20 @@ export default function DiaryDemoPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center mt-10">
+      <div className="flex flex-col items-center mt-4 sm:mt-6 md:mt-8 lg:mt-10 px-2 sm:px-4">
         {/* Skeleton for DiaryBook cover */}
-        <div className="w-[320px] h-[420px] bg-gray-200 animate-pulse rounded-lg mb-6" />
+        <div className="w-[280px] h-[350px] sm:w-[320px] sm:h-[420px] md:w-[400px] md:h-[500px] lg:w-[500px] lg:h-[600px] bg-gray-200 animate-pulse rounded-lg mb-4 sm:mb-6" />
         {/* Skeleton for title */}
-        <div className="w-2/3 h-8 bg-gray-200 animate-pulse rounded mb-4" />
+        <div className="w-2/3 h-6 sm:h-8 bg-gray-200 animate-pulse rounded mb-3 sm:mb-4" />
         {/* Skeleton for author */}
-        <div className="w-1/3 h-6 bg-gray-200 animate-pulse rounded mb-8" />
+        <div className="w-1/3 h-4 sm:h-6 bg-gray-200 animate-pulse rounded mb-6 sm:mb-8" />
         {/* Skeleton for chapters */}
-        <div className="w-full max-w-2xl space-y-4">
+        <div className="w-full max-w-2xl space-y-3 sm:space-y-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-5 bg-gray-200 animate-pulse rounded" />
+            <div
+              key={i}
+              className="h-4 sm:h-5 bg-gray-200 animate-pulse rounded"
+            />
           ))}
         </div>
       </div>
@@ -89,7 +92,9 @@ export default function DiaryDemoPage() {
 
   if (!executive) {
     return (
-      <p className="text-center mt-10 text-red-600">Executive not found.</p>
+      <p className="text-center mt-4 sm:mt-6 md:mt-8 lg:mt-10 text-red-600 px-4">
+        Executive not found.
+      </p>
     );
   }
 

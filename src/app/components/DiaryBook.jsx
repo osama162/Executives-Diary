@@ -1060,8 +1060,8 @@ export default function DiaryBook({
   }
 
   return (
-    <div className="mx-14 mt-4">
-      <div className="border-[#1e1c4d] border-[19px] border-x-[30px] rounded-[10px] mx-10 my-2 relative overflow-visible">
+    <div className="mx-2 sm:mx-6 md:mx-10 lg:mx-14 mt-2 sm:mt-4">
+      <div className="border-[#1e1c4d] border-[8px] sm:border-[12px] md:border-[16px] lg:border-[19px] border-x-[15px] sm:border-x-[20px] md:border-x-[25px] lg:border-x-[30px] rounded-[10px] mx-2 sm:mx-6 md:mx-8 lg:mx-10 my-2 relative overflow-visible">
         <div className="bg-white rounded-md overflow-visible relative">
           <div className="relative book-shadow overflow-visible">
             <div className="mx-auto overflow-hidden">
@@ -1069,9 +1069,9 @@ export default function DiaryBook({
                 width={725}
                 height={550.25}
                 size="stretch"
-                minWidth={480}
+                minWidth={280}
                 maxWidth={725}
-                minHeight={420.25}
+                minHeight={350}
                 maxHeight={550.25}
                 maxShadowOpacity={0.2}
                 showCover={false}
@@ -1089,12 +1089,13 @@ export default function DiaryBook({
                 {pages}
               </HTMLFlipBook>
             </div>
-            <div className="absolute right-7 z-10">
+            <div className="absolute right-2 sm:right-4 md:right-6 lg:right-7 z-10">
               <Image
                 src="/images/SHAPE.png"
                 alt="ribbon"
-                height={110}
-                width={100}
+                height={60}
+                width={50}
+                className="sm:h-[80px] sm:w-[70px] md:h-[100px] md:w-[90px] lg:h-[110px] lg:w-[100px]"
                 priority
               />
             </div>
@@ -1103,24 +1104,24 @@ export default function DiaryBook({
       </div>
 
       {/* Arrows — only for About/Recs */}
-      <div className="flex justify-center gap-2  absolute bottom-[calc(var(--spacing)*8)] left-0 right-0">
+      <div className="flex justify-center gap-2 absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-[calc(var(--spacing)*8)] left-0 right-0">
         <button
           type="button"
           onClick={goPrev}
-          className="w-12 h-12 hover:bg-[#28d7a2]  bg-[#1b1b4a] text-white grid place-items-center cursor-pointer disabled:opacity-50"
+          className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:bg-[#28d7a2] bg-[#1b1b4a] text-white grid place-items-center cursor-pointer disabled:opacity-50"
           disabled={activeTab <= 0}
           aria-label="Previous"
         >
-          <IoMdArrowDropleft color="white" className="relative" size={30} />
+          <IoMdArrowDropleft color="white" className="relative" size={20} />
         </button>
         <button
           type="button"
           onClick={goNext}
-          className="w-12 h-12 hover:bg-[#28d7a2] bg-[#1b1b4a] text-white grid place-items-center cursor-pointer disabled:opacity-50"
+          className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 hover:bg-[#28d7a2] bg-[#1b1b4a] text-white grid place-items-center cursor-pointer disabled:opacity-50"
           disabled={activeTab >= 1}
           aria-label="Next"
         >
-          <IoMdArrowDropright color="white" size={30} />
+          <IoMdArrowDropright color="white" size={20} />
         </button>
       </div>
 

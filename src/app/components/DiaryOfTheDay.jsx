@@ -93,15 +93,15 @@ const DiaryOfTheDay = () => {
     );
 
   return (
-    <section className="mt-12 mb-5">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="mt-8 sm:mt-12 mb-5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className="
             bg-[#f1e8d6] 
             rounded-[10px] 
-            border-y-[19px] border-x-[25px] border-[#1e1c4d] 
+            border-y-[12px] sm:border-y-[19px] border-x-[15px] sm:border-x-[25px] border-[#1e1c4d] 
             overflow-visible relative
-            min-h-[520px] 
+            min-h-[400px] sm:min-h-[520px] 
             md:min-h-[560px]
           "
         >
@@ -123,7 +123,7 @@ const DiaryOfTheDay = () => {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2">
                 {diaryEntries.length > 0 && (
                   <CarouselPanel
                     title="Diary of the Day"
